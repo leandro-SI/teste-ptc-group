@@ -1,4 +1,5 @@
 ﻿using BlogPTC.Application.Dtos;
+using BlogPTC.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,7 @@ namespace BlogPTC.Application.Interfaces
         Task<UserDTO> GetUserById(string id);
         Task<UserDTO> GetUserByEmail(string email);
         Task<IList<string>> GetRoles(UserDTO userDto);
-        Task<bool> CreateUser(RegisterDTO registerDto, string password);
+        Task<bool> RegisterUser(RegisterDTO userDto, string password);
         Task UpdateUser(UserDTO userDTO, UserUpdateDTO userUpdateDto);
     }
 }

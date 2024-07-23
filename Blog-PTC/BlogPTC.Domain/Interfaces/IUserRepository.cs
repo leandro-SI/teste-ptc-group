@@ -11,5 +11,6 @@ namespace BlogPTC.Domain.Interfaces
         Task CreateUserAsync(User user);
         Task<int> GetQuantityUserAsync();
         Task<IList<string>> GetRolesAsync(User user);
+        Task<bool> RegisterUserAsync(User user, string password);
     }
 }

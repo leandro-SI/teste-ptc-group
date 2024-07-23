@@ -25,7 +25,7 @@ namespace BlogPTC.Application.Services
             _mapper = mapper;
         }
 
-        public async Task<bool> CreateUser(RegisterDTO registerDto, string password)
+        public async Task<bool> RegisterUser(RegisterDTO registerDto, string password)
         {
             var userDto = new UserDTO
             {
@@ -74,5 +74,7 @@ namespace BlogPTC.Application.Services
 
             await _userRepository.UpdateUserAsync(newUser);
         }
+
+
     }
 }

@@ -7,7 +7,7 @@
         public string Content { get; private set; }
         public DateTime CreatedAt { get; private set; }
         public DateTime UpdatedAt { get; private set; }
-        public long UserId { get; set; }
+        public string UserId { get; set; }
         public User User { get; set; }
 
     }

@@ -52,7 +52,7 @@ namespace BlogPTC.Application.Services
         {
             var post = _mapper.Map<Post>(postDto);
 
-            await _postRepository.UpdatePostAsync(cartao);
+            await _postRepository.UpdatePostAsync(post);
         }
     }
 }

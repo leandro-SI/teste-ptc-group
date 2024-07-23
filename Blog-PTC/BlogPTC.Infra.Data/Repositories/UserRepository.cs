@@ -17,9 +17,11 @@ namespace BlogPTC.Infra.Data.Repositories
             _userManager = userManager;
         }
 
-        public Task CreateUserAsync(User user)
+        public async Task<bool> RegisterUserAsync(User user, string password)
         {
-            throw new NotImplementedException();
+            var result = await _userManager.CreateAsync(user, password);
+
+            return result.Succeeded;
         }
 
         public async Task<int> GetQuantityUserAsync()
