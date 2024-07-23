@@ -2,7 +2,7 @@
 
 namespace BlogPTC.Domain.Entities
 {
-    public sealed class User : IdentityUser<string>
+    public class User : IdentityUser<string>
     {
         public ICollection<Post> Posts { get; set; }
     }

@@ -6,6 +6,8 @@ namespace BlogPTC.Domain.Interfaces
     {
         Task<User> GetUserByIdAsync(long id);
         Task<User> GetUserByUsernameAsync(string username);
+        Task UpdateUserAsync(User user);
         Task CreateUserAsync(User user);
+        Task<int> GetQuantityUserAsync();
     }
 }
