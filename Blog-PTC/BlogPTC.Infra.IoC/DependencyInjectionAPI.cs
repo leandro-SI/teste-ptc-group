@@ -1,11 +1,15 @@
-﻿using BlogPTC.Application.Interfaces;
+﻿using BlogPTC.Application.Dtos;
+using BlogPTC.Application.Interfaces;
 using BlogPTC.Application.Mappings;
 using BlogPTC.Application.Services;
+using BlogPTC.Application.Validations;
 using BlogPTC.Domain.Account;
 using BlogPTC.Domain.Interfaces;
 using BlogPTC.Infra.Data.Context;
 using BlogPTC.Infra.Data.Identity;
 using BlogPTC.Infra.Data.Repositories;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -39,13 +43,23 @@ namespace BlogPTC.Infra.IoC
                 options.SignIn.RequireConfirmedAccount = false;
             });
 
+            services.AddFluentValidationAutoValidation();
+            services.AddFluentValidationClientsideAdapters();
+
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IAuthenticate, AuthenticateService>();
+
+            services.AddTransient<IValidator<RegisterDTO>, RegisterValidator>();
+            services.AddTransient<IValidator<LoginDTO>, LoginValidator>();
+            services.AddTransient<IValidator<PostDTO>, PostValidator>();
+            services.AddTransient<IValidator<UserUpdateDTO>, UserUpdateValidator>();
 
             services.AddScoped<IPostRepository, PostRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IPostService, PostService>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IRoleService, RoleService>();
+            services.AddScoped<IRoleRepository, RoleRepository>();
 
             services.AddAutoMapper(typeof(DomainToDTOMappingProfile));
 

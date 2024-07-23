@@ -8,9 +8,8 @@ namespace BlogPTC.Domain.Interfaces
         Task<User> GetUserByUsernameAsync(string username);
         Task<User> GetUserByEmailAsync(string email);
         Task UpdateUserAsync(User user);
-        Task CreateUserAsync(User user);
         Task<int> GetQuantityUserAsync();
         Task<IList<string>> GetRolesAsync(User user);
-        Task<bool> RegisterUserAsync(User user, string password);
+        Task<bool> RegisterUserAsync(User user, string password);        
     }
 }

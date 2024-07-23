@@ -21,7 +21,14 @@ namespace BlogPTC.Infra.Data.Repositories
         {
             var result = await _userManager.CreateAsync(user, password);
 
+            _context.Entry(user).State = EntityState.Detached;
+
             return result.Succeeded;
+        }
+
+        public async Task LinkUserRoleAsync(User user, string role)
+        {
+            var result = await _userManager.AddToRoleAsync(user, role);
         }
 
         public async Task<int> GetQuantityUserAsync()
@@ -34,9 +41,10 @@ namespace BlogPTC.Infra.Data.Repositories
             return await _userManager.GetRolesAsync(user);
         }
 
-        public Task<User> GetUserByEmailAsync(string email)
+        public async Task<User> GetUserByEmailAsync(string email)
         {
-            throw new NotImplementedException();
+            var user = await _context.Usuarios.AsNoTracking().FirstOrDefaultAsync(u => u.Email == email);
+            return user;
         }
 
         public Task<User> GetUserByIdAsync(string id)

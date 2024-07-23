@@ -4,6 +4,9 @@ using BlogPTC.Application.Interfaces;
 using BlogPTC.Domain.Account;
 using BlogPTC.Domain.Entities;
 using BlogPTC.Domain.Interfaces;
+using BlogPTC.Infra.Data.Context;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,7 +39,7 @@ namespace BlogPTC.Application.Services
 
             var user = _mapper.Map<User>(userDto);
 
-            return await _authenticateService.RegisterUserAsync(user, password);
+            return await _userRepository.RegisterUserAsync(user, password);
         }
 
         public async Task<int> GetQuantityUsers()
@@ -74,7 +77,6 @@ namespace BlogPTC.Application.Services
 
             await _userRepository.UpdateUserAsync(newUser);
         }
-
 
     }
 }
