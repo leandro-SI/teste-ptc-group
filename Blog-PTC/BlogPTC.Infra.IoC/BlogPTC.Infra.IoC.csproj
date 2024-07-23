@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BlogPTC.Application\BlogPTC.Application.csproj" />
+    <ProjectReference Include="..\BlogPTC.Infra.Data\BlogPTC.Infra.Data.csproj" />
+  </ItemGroup>
+
+</Project>
