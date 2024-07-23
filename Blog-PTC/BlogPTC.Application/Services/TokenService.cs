@@ -37,7 +37,7 @@ namespace BlogPTC.Application.Services
                 Subject = new ClaimsIdentity(
                 new Claim[]
                 {
-                    new Claim(ClaimTypes.PrimarySid, userDto.Id),
+                    new Claim("user_id", userDto.Id),
                     new Claim(ClaimTypes.Name, userDto.UserName),
                     new Claim(ClaimTypes.Role, role)
                 }),

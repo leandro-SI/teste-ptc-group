@@ -1,0 +1,18 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Text.Json.Serialization;
+using System.Threading.Tasks;
+
+namespace BlogPTC.Application.Dtos
+{
+    public class NewPostDTO
+    {
+        public string Title { get; set; }
+        public string Content { get; set; }
+
+        [JsonIgnore]
+        public string UserId { get; set; }
+    }
+}

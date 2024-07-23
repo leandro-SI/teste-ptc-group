@@ -12,7 +12,7 @@ namespace BlogPTC.Application.Interfaces
         Task<IEnumerable<PostDTO>> GetAllPosts();
         Task<PostDTO> GePostById(long id);
         Task UpdatePost(PostDTO postDto);
-        Task CreatePost(PostDTO postDto);
+        Task CreatePost(NewPostDTO postDto);
         Task DeletePost(long id);
     }
 }

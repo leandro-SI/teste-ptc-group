@@ -22,7 +22,7 @@ namespace BlogPTC.Application.Services
             _mapper = mapper;
         }
 
-        public async Task CreatePost(PostDTO postDto)
+        public async Task CreatePost(NewPostDTO postDto)
         {
             var post = _mapper.Map<Post>(postDto);
 

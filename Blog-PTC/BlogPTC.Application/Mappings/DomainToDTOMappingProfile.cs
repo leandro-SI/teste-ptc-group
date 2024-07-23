@@ -10,6 +10,7 @@ namespace BlogPTC.Application.Mappings
         {
             CreateMap<User, UserDTO>().ReverseMap();
             CreateMap<Post, PostDTO>().ReverseMap();
+            CreateMap<Post, NewPostDTO>().ReverseMap();
             CreateMap<Role, RoleDTO>().ReverseMap();
         }
     }
