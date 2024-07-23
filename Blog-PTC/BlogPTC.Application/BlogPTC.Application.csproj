@@ -16,4 +16,9 @@
     <ProjectReference Include="..\BlogPTC.Infra.Data\BlogPTC.Infra.Data.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Exceptions\" />
+    <Folder Include="Responses\" />
+  </ItemGroup>
+
 </Project>
