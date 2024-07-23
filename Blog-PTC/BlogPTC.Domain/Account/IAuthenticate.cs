@@ -7,6 +7,5 @@ namespace BlogPTC.Domain.Account
         Task<bool> RegisterUserAsync(User user, string password);
         Task<User> GetUserByEmailAsync(string email);
         Task LinkUserRoleAsync(User user, string role);
-        Task<IList<string>> GetRolesAsync(User user);
     }
 }

@@ -27,7 +27,17 @@ namespace BlogPTC.Infra.Data.Repositories
             return await _context.Usuarios.CountAsync();
         }
 
-        public Task<User> GetUserByIdAsync(long id)
+        public async Task<IList<string>> GetRolesAsync(User user)
+        {
+            return await _userManager.GetRolesAsync(user);
+        }
+
+        public Task<User> GetUserByEmailAsync(string email)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<User> GetUserByIdAsync(string id)
         {
             throw new NotImplementedException();
         }

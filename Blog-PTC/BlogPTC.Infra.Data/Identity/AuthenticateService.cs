@@ -3,11 +3,6 @@ using BlogPTC.Domain.Entities;
 using BlogPTC.Infra.Data.Context;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BlogPTC.Infra.Data.Identity
 {
@@ -16,10 +11,6 @@ namespace BlogPTC.Infra.Data.Identity
         private readonly UserManager<User> _userManager;
         private readonly ApplicationDbContext _applicationDbContext;
 
-        public async Task<IList<string>> GetRolesAsync(User user)
-        {
-            return await _userManager.GetRolesAsync(user);
-        }
 
         public async Task<User> GetUserByEmailAsync(string email)
         {

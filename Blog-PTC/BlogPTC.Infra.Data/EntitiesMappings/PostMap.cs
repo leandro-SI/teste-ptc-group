@@ -18,7 +18,7 @@ namespace BlogPTC.Infra.Data.EntitiesMappings
 
             builder.Property(p => p.Content)
                 .IsRequired()
-                .HasMaxLength(80);
+                .HasMaxLength(400);
 
             builder.Property(p => p.CreatedAt)
                 .IsRequired()
