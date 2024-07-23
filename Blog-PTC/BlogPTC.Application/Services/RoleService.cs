@@ -22,6 +22,12 @@ namespace BlogPTC.Application.Services
             _mapper = mapper;
         }
 
+        public async Task<IList<string>> GetRolesByUser(UserDTO userDto)
+        {
+            var user = _mapper.Map<User>(userDto);
+            return await _roleRepository.GetRolesByUserAsync(user);
+        }
+
         public async Task LinkUserRoleAsync(UserDTO userDto, string role)
         {
             userDto.SecurityStamp = Guid.NewGuid().ToString();

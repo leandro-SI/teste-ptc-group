@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using BlogPTC.Application.Dtos;
 using BlogPTC.Application.Interfaces;
 using BlogPTC.Domain.Entities;
 using Microsoft.Extensions.Configuration;
@@ -24,7 +25,7 @@ namespace BlogPTC.Application.Services
             _mapper = mapper;
         }
 
-        public string GenerateToken(User user, string role)
+        public string GenerateToken(UserDTO userDto, string role)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var secret = _configuration["Jwt:SecretKey"];
@@ -36,8 +37,8 @@ namespace BlogPTC.Application.Services
                 Subject = new ClaimsIdentity(
                 new Claim[]
                 {
-                    new Claim(ClaimTypes.PrimarySid, user.Id),
-                    new Claim(ClaimTypes.Name, user.UserName),
+                    new Claim(ClaimTypes.PrimarySid, userDto.Id),
+                    new Claim(ClaimTypes.Name, userDto.UserName),
                     new Claim(ClaimTypes.Role, role)
                 }),
 

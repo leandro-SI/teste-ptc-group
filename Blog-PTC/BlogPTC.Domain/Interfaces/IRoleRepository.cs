@@ -10,5 +10,6 @@ namespace BlogPTC.Domain.Interfaces
     public interface IRoleRepository
     {
         Task LinkUserRoleAsync(User user, string role);
+        Task<IList<string>> GetRolesByUserAsync(User user);
     }
 }

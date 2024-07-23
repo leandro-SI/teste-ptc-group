@@ -1,4 +1,5 @@
-﻿using BlogPTC.Domain.Entities;
+﻿using BlogPTC.Application.Dtos;
+using BlogPTC.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,6 @@ namespace BlogPTC.Application.Interfaces
 {
     public interface ITokenService
     {
-        string GenerateToken(User user, string role);
+        string GenerateToken(UserDTO userDto, string role);
     }
 }

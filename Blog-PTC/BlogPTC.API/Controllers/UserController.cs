@@ -1,9 +1,5 @@
 ﻿using BlogPTC.Application.Dtos;
 using BlogPTC.Application.Interfaces;
-using BlogPTC.Application.Services;
-using BlogPTC.Domain.Account;
-using BlogPTC.Infra.Data.Identity;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BlogPTC.API.Controllers
@@ -13,14 +9,12 @@ namespace BlogPTC.API.Controllers
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
-        private readonly IAuthenticate _authenticate;
         private readonly IRoleService _roleService;
         private readonly IConfiguration _configuration;
 
-        public UserController(IUserService userService, IAuthenticate authenticate, IConfiguration configuration, IRoleService roleService)
+        public UserController(IUserService userService, IConfiguration configuration, IRoleService roleService)
         {
             _userService = userService;
-            _authenticate = authenticate;
             _configuration = configuration;
             _roleService = roleService;
         }

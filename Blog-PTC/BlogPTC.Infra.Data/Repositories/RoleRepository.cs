@@ -18,6 +18,11 @@ namespace BlogPTC.Infra.Data.Repositories
             _userManager = userManager;
         }
 
+        public async Task<IList<string>> GetRolesByUserAsync(User user)
+        {
+            return await _userManager.GetRolesAsync(user);
+        }
+
         public async Task LinkUserRoleAsync(User user, string role)
         {
             await _userManager.AddToRoleAsync(user, role);
