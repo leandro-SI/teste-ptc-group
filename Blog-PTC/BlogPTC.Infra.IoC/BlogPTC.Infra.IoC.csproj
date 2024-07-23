@@ -7,6 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.31" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.35.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\BlogPTC.Application\BlogPTC.Application.csproj" />
     <ProjectReference Include="..\BlogPTC.Infra.Data\BlogPTC.Infra.Data.csproj" />
   </ItemGroup>
