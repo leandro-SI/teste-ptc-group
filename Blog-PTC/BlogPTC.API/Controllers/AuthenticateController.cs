@@ -28,25 +28,23 @@ namespace BlogPTC.API.Controllers
         {
             try
             {
-                if (loginDto == null)
-                    return NotFound("Usuario ou senha inválidos.");
 
-                var usuario = await _userService.GetUserByEmail(loginDto.Email);
+                var user = await _userService.GetUserByEmail(loginDto.Email);
 
-                if (usuario != null)
+                if (user != null)
                 {
                     PasswordHasher<UserDTO> passwordHasher = new PasswordHasher<UserDTO>();
-                    if (passwordHasher.VerifyHashedPassword(usuario, usuario.PasswordHash, loginDto.Password) != PasswordVerificationResult.Failed)
+                    if (passwordHasher.VerifyHashedPassword(user, user.PasswordHash, loginDto.Password) != PasswordVerificationResult.Failed)
                     {
-                        var funcoesUsuario = await _roleService.GetRolesByUser(usuario);
+                        var userRoles = await _roleService.GetRolesByUser(user);
 
-                        var tokenUsuario = _tokenService.GenerateToken(usuario, funcoesUsuario.First());
+                        var tokenUser = _tokenService.GenerateToken(user, userRoles.First());
 
                         return Ok(new
                         {
-                            username = usuario.UserName,
+                            username = user.UserName,
                             mensagem = "Login feito com sucesso.",
-                            token = tokenUsuario
+                            token = tokenUser
                         });
                     }
                     return NotFound("Usuário inválido.");
