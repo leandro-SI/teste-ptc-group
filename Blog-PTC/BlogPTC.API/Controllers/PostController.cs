@@ -1,6 +1,7 @@
 ﻿using BlogPTC.API.Base;
 using BlogPTC.Application.Dtos;
 using BlogPTC.Application.Interfaces;
+using BlogPTC.Application.WebSockets.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,12 +12,14 @@ namespace BlogPTC.API.Controllers
     public class PostController : BlogControllerBase
     {
         private readonly IPostService _postService;
+        private readonly INotificationService _notificationService;
         private readonly ILogger _logger = null;
 
-        public PostController(IPostService postService, ILogger<PostController> logger)
+        public PostController(IPostService postService, ILogger<PostController> logger, INotificationService notificationService)
         {
             _postService = postService;
             _logger = logger;
+            _notificationService = notificationService;
         }
 
         [HttpGet("get-all")]
@@ -45,6 +48,8 @@ namespace BlogPTC.API.Controllers
                 postDto.UserId = userId;
 
                 await _postService.CreatePost(postDto);
+
+                await _notificationService.SendNotificationAsync($"Novo post criado: {postDto.Title}");
 
                 return Ok(new { mensagem = $"post {postDto.Title} criado com sucesso." });
             }

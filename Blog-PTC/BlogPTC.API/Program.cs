@@ -1,3 +1,4 @@
+using BlogPTC.Application.WebSockets;
 using BlogPTC.Domain.Entities;
 using BlogPTC.Infra.Data.Context;
 using BlogPTC.Infra.IoC;
@@ -61,5 +62,6 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+app.MapHub<WebSocketHandler>("/ws");
 
 app.Run();

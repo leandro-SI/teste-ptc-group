@@ -3,6 +3,7 @@ using BlogPTC.Application.Interfaces;
 using BlogPTC.Application.Mappings;
 using BlogPTC.Application.Services;
 using BlogPTC.Application.Validations;
+using BlogPTC.Application.WebSockets.Services;
 using BlogPTC.Domain.Interfaces;
 using BlogPTC.Infra.Data.Context;
 using BlogPTC.Infra.Data.Repositories;
@@ -54,6 +55,9 @@ namespace BlogPTC.Infra.IoC
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IRoleService, RoleService>();
             services.AddScoped<IRoleRepository, RoleRepository>();
+
+            services.AddSignalR();
+            services.AddScoped<INotificationService, NotificationService>();
 
             services.AddAutoMapper(typeof(DomainToDTOMappingProfile));
 
