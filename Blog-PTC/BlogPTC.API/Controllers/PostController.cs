@@ -22,6 +22,15 @@ namespace BlogPTC.API.Controllers
             _notificationService = notificationService;
         }
 
+
+        /// <summary>
+        /// Recuperar todos os posts
+        /// </summary>
+        /// <returns>Lista de posts</returns>
+        /// <response code="200">Lista de posts retornada com sucesso</response>
+        /// <response code="500">Erro interno</response>
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpGet("get-all")]
         public async Task<IActionResult> GetAllPosts()
         {
@@ -38,6 +47,16 @@ namespace BlogPTC.API.Controllers
             }
         }
 
+
+        /// <summary>
+        /// Criar novo post
+        /// </summary>
+        /// <param name="postDto">Dados do post</param>
+        /// <returns>Mensagem de sucesso</returns>
+        /// <response code="200">Sucesso</response>
+        /// <response code="500">Erro interno</response>
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Authorize(Roles = "Administrador, Usuario")]
         [HttpPost("new")]
         public async Task<IActionResult> CreatePost([FromBody] NewPostDTO postDto)
@@ -60,6 +79,21 @@ namespace BlogPTC.API.Controllers
             }
         }
 
+
+        /// <summary>
+        /// Atualizar um post existente
+        /// </summary>
+        /// <param name="id">ID do post a ser atualizado</param>
+        /// <param name="postUpdateDto">Dados atualizados do post</param>
+        /// <returns>Mensagem de sucesso</returns>
+        /// <response code="200">Post atualizado com sucesso</response>
+        /// <response code="400">Requisição inválida (por exemplo, dados faltando ou inválidos)</response>
+        /// <response code="404">Post não encontrado</response>
+        /// <response code="500">Erro interno</response>
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Authorize(Roles = "Administrador, Usuario")]
         [HttpPut("edit/{id}")]
         public async Task<IActionResult> EditPost([FromBody] UpdatePostDTO postUpdateDto, long id)
@@ -91,6 +125,18 @@ namespace BlogPTC.API.Controllers
             }
         }
 
+
+        /// <summary>
+        /// Excluir um post existente
+        /// </summary>
+        /// <param name="id">ID do post a ser excluído</param>
+        /// <returns>Mensagem de sucesso</returns>
+        /// <response code="200">Post excluído com sucesso</response>
+        /// <response code="404">Post não encontrado</response>
+        /// <response code="500">Erro interno</response>
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Authorize(Roles = "Administrador, Usuario")]
         [HttpDelete("delete/{id}")]
         public async Task<IActionResult> DeletePost(long id)

@@ -20,6 +20,18 @@ namespace BlogPTC.API.Controllers
             _logger = logger;
         }
 
+
+        /// <summary>
+        /// Registrar novo usuário
+        /// </summary>
+        /// <param name="registerDTO">Dados do usuário</param>
+        /// <returns>Mensagem de sucesso</returns>
+        /// <response code="200">Sucesso</response>
+        /// <response code="400">Requisição inválida (por exemplo, dados faltando ou inválidos)</response>
+        /// <response code="500">Erro interno</response>
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpPost("register")]
         public async Task<IActionResult> Registrar([FromBody] RegisterDTO registerDTO)
         {

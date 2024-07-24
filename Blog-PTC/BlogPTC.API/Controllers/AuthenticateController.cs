@@ -23,6 +23,18 @@ namespace BlogPTC.API.Controllers
             _logger = logger;
         }
 
+
+        /// <summary>
+        /// Logar e gerar token de usuário
+        /// </summary>
+        /// <param name="loginDto">Dados do usuário</param>
+        /// <returns>Token</returns>
+        /// <response code="200">Sucesso</response>
+        /// <response code="404">Usuário não encotrado</response>
+        /// <response code="500">Erro interno</response>
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpPost("login")]
         public async Task<IActionResult> Logar([FromBody] LoginDTO loginDto)
         {
