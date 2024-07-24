@@ -25,8 +25,8 @@ namespace BlogPTC.Application.Services
         public async Task CreatePost(NewPostDTO postDto)
         {
             var post = _mapper.Map<Post>(postDto);
-            post.CreatedAt = DateTime.UtcNow;
-            post.UpdatedAt = DateTime.UtcNow;
+            post.CreatedAt = DateTime.Now;
+            post.UpdatedAt = DateTime.Now;
 
             await _postRepository.CreatePostAsync(post);
         }
@@ -54,7 +54,7 @@ namespace BlogPTC.Application.Services
         {
             post.Title = postUpdateDto.Title;
             post.Content = postUpdateDto.Content;
-            post.UpdatedAt = DateTime.UtcNow;
+            post.UpdatedAt = DateTime.Now;
 
             var postEdit = _mapper.Map<Post>(post);
 

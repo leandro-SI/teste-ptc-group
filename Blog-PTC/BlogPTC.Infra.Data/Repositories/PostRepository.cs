@@ -34,7 +34,7 @@ namespace BlogPTC.Infra.Data.Repositories
 
         public async Task<IEnumerable<Post>> GetAllPostsAsync()
         {
-            var posts = await _context.Posts.ToListAsync();
+            var posts = await _context.Posts.Include(p => p.User).ToListAsync();
             return posts;
         }
 

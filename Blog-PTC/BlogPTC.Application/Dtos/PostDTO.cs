@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace BlogPTC.Application.Dtos
@@ -14,7 +15,10 @@ namespace BlogPTC.Application.Dtos
         public string Content { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
+        public string CreatedBy { get; set; }
+        [JsonIgnore]
         public string UserId { get; set; }
+        [JsonIgnore]
         public UserDTO User { get; set; }
     }
 }

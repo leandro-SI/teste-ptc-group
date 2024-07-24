@@ -20,6 +20,22 @@ namespace BlogPTC.API.Controllers
             _logger = logger;
         }
 
+        [HttpGet("get-all")]
+        public async Task<IActionResult> GetAllPosts()
+        {
+            try
+            {
+                var posts = await _postService.GetAllPosts();
+
+                return Ok(posts);
+            }
+            catch (Exception _erro)
+            {
+                _logger.LogError(_erro, _erro.Message, null);
+                return StatusCodeResponse(StatusCodes.Status500InternalServerError, "Erro ao listar os posts!");
+            }
+        }
+
         [Authorize(Roles = "Administrador, Usuario")]
         [HttpPost("new")]
         public async Task<IActionResult> CreatePost([FromBody] NewPostDTO postDto)
