@@ -13,7 +13,7 @@ namespace BlogPTC.API.Controllers
         private readonly IRoleService _roleService;
         private readonly ILogger _logger = null;
 
-        public UserController(IUserService userService, IRoleService roleService, ILogger logger)
+        public UserController(IUserService userService, IRoleService roleService, ILogger<UserController> logger)
         {
             _userService = userService;
             _roleService = roleService;

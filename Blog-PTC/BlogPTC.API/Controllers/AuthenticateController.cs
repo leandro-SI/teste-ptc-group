@@ -17,7 +17,7 @@ namespace BlogPTC.API.Controllers
         private readonly IRoleService _roleService;
         private readonly ILogger _logger = null;
 
-        public AuthenticateController(ITokenService tokenService, IUserService userService, IRoleService roleService, ILogger logger)
+        public AuthenticateController(ITokenService tokenService, IUserService userService, IRoleService roleService, ILogger<AuthenticateController> logger)
         {
             _tokenService = tokenService;
             _userService = userService;

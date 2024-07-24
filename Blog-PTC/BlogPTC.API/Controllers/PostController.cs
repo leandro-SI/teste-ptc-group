@@ -54,6 +54,9 @@ namespace BlogPTC.API.Controllers
 
                 var post = await _postService.GeTPostById(postUpdateDto.Id);
 
+                if (post == null)
+                    return NotFound("Post não encontrado.");
+
                 if (post.UserId != userId)
                     return BadRequest("Você só pode alterar o seu próprio post!");
 
@@ -65,6 +68,33 @@ namespace BlogPTC.API.Controllers
             {
                 _logger.LogError(_erro, _erro.Message, null);
                 return StatusCodeResponse(StatusCodes.Status500InternalServerError, "Erro ao cadastra novo post!");
+            }
+        }
+
+        [Authorize(Roles = "Administrador, Usuario")]
+        [HttpDelete("delete/{id}")]
+        public async Task<IActionResult> DeletePost(long id)
+        {
+            try
+            {
+                var userId = HttpContext.User.Claims.FirstOrDefault(u => u.Type == "user_id").Value;
+
+                var post = await _postService.GeTPostById(id);
+
+                if (post == null)
+                    return NotFound("Post não encontrado.");
+
+                if (post.UserId != userId)
+                    return BadRequest("Você só pode excluir o seu próprio post!");
+
+                await _postService.DeletePost(id);
+
+                return Ok(new { mensagem = $"post {post.Title} excluido com sucesso." });
+            }
+            catch (Exception _erro)
+            {
+                _logger.LogError(_erro, _erro.Message, null);
+                return StatusCodeResponse(StatusCodes.Status500InternalServerError, "Erro ao tentar excluir post!");
             }
         }
 
