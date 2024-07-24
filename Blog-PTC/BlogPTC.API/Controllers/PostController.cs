@@ -2,7 +2,6 @@
 using BlogPTC.Application.Dtos;
 using BlogPTC.Application.Interfaces;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BlogPTC.API.Controllers

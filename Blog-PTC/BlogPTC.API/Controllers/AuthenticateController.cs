@@ -1,8 +1,6 @@
 ﻿using BlogPTC.API.Base;
 using BlogPTC.Application.Dtos;
 using BlogPTC.Application.Interfaces;
-using BlogPTC.Domain.Account;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 

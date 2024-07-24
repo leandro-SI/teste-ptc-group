@@ -3,11 +3,6 @@ using BlogPTC.Application.Dtos;
 using BlogPTC.Application.Interfaces;
 using BlogPTC.Domain.Entities;
 using BlogPTC.Domain.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BlogPTC.Application.Services
 {

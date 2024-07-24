@@ -1,11 +1,6 @@
 ﻿using BlogPTC.Domain.Entities;
 using BlogPTC.Domain.Interfaces;
 using Microsoft.AspNetCore.Identity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BlogPTC.Infra.Data.Repositories
 {

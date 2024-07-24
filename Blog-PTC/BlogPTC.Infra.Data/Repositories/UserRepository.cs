@@ -26,20 +26,11 @@ namespace BlogPTC.Infra.Data.Repositories
             return result.Succeeded;
         }
 
-        public async Task LinkUserRoleAsync(User user, string role)
-        {
-            var result = await _userManager.AddToRoleAsync(user, role);
-        }
-
         public async Task<int> GetQuantityUserAsync()
         {
             return await _context.Usuarios.CountAsync();
         }
 
-        public async Task<IList<string>> GetRolesAsync(User user)
-        {
-            return await _userManager.GetRolesAsync(user);
-        }
 
         public async Task<User> GetUserByEmailAsync(string email)
         {
@@ -47,19 +38,5 @@ namespace BlogPTC.Infra.Data.Repositories
             return user;
         }
 
-        public Task<User> GetUserByIdAsync(string id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<User> GetUserByUsernameAsync(string username)
-        {
-            throw new NotImplementedException();
-        }
-
-        public async Task UpdateUserAsync(User user)
-        {
-            await _userManager.UpdateAsync(user);
-        }
     }
 }

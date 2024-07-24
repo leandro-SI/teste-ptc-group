@@ -3,10 +3,8 @@ using BlogPTC.Application.Interfaces;
 using BlogPTC.Application.Mappings;
 using BlogPTC.Application.Services;
 using BlogPTC.Application.Validations;
-using BlogPTC.Domain.Account;
 using BlogPTC.Domain.Interfaces;
 using BlogPTC.Infra.Data.Context;
-using BlogPTC.Infra.Data.Identity;
 using BlogPTC.Infra.Data.Repositories;
 using FluentValidation;
 using FluentValidation.AspNetCore;
@@ -14,11 +12,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BlogPTC.Infra.IoC
 {
@@ -47,7 +40,6 @@ namespace BlogPTC.Infra.IoC
             services.AddFluentValidationClientsideAdapters();
 
             services.AddScoped<ITokenService, TokenService>();
-            services.AddScoped<IAuthenticate, AuthenticateService>();
 
             services.AddTransient<IValidator<RegisterDTO>, RegisterValidator>();
             services.AddTransient<IValidator<LoginDTO>, LoginValidator>();

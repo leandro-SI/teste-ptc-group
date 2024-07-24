@@ -4,12 +4,8 @@ namespace BlogPTC.Domain.Interfaces
 {
     public interface IUserRepository
     {
-        Task<User> GetUserByIdAsync(string id);
-        Task<User> GetUserByUsernameAsync(string username);
         Task<User> GetUserByEmailAsync(string email);
-        Task UpdateUserAsync(User user);
         Task<int> GetQuantityUserAsync();
-        Task<IList<string>> GetRolesAsync(User user);
         Task<bool> RegisterUserAsync(User user, string password);        
     }
 }
