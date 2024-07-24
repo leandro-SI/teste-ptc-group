@@ -20,15 +20,6 @@ namespace BlogPTC.Infra.Data.EntitiesMappings
                 .IsRequired()
                 .HasMaxLength(400);
 
-            builder.Property(p => p.CreatedAt)
-                .IsRequired()
-                .HasDefaultValueSql("GETDATE()");
-
-            builder.Property(p => p.UpdatedAt)
-                .IsRequired()
-                .ValueGeneratedOnAddOrUpdate()
-                .HasDefaultValueSql("GETDATE()");
-
             builder.HasOne(p => p.User)
                 .WithMany(p => p.Posts)
                 .HasForeignKey(p => p.UserId)

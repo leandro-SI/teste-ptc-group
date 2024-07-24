@@ -10,8 +10,8 @@ namespace BlogPTC.Application.Interfaces
     public interface IPostService
     {
         Task<IEnumerable<PostDTO>> GetAllPosts();
-        Task<PostDTO> GePostById(long id);
-        Task UpdatePost(PostDTO postDto);
+        Task<PostDTO> GeTPostById(long id);
+        Task UpdatePost(PostDTO post, UpdatePostDTO postDto);
         Task CreatePost(NewPostDTO postDto);
         Task DeletePost(long id);
     }

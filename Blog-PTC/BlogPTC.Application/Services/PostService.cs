@@ -25,6 +25,8 @@ namespace BlogPTC.Application.Services
         public async Task CreatePost(NewPostDTO postDto)
         {
             var post = _mapper.Map<Post>(postDto);
+            post.CreatedAt = DateTime.UtcNow;
+            post.UpdatedAt = DateTime.UtcNow;
 
             await _postRepository.CreatePostAsync(post);
         }
@@ -34,7 +36,7 @@ namespace BlogPTC.Application.Services
             await _postRepository.DeletePostAsync(id);
         }
 
-        public async Task<PostDTO> GePostById(long id)
+        public async Task<PostDTO> GeTPostById(long id)
         {
             var post = await _postRepository.GetPostByIdAsync(id);
 
@@ -48,11 +50,15 @@ namespace BlogPTC.Application.Services
             return _mapper.Map<IEnumerable<PostDTO>>(posts);
         }
 
-        public async Task UpdatePost(PostDTO postDto)
+        public async Task UpdatePost(PostDTO post, UpdatePostDTO postUpdateDto)
         {
-            var post = _mapper.Map<Post>(postDto);
+            post.Title = postUpdateDto.Title;
+            post.Content = postUpdateDto.Content;
+            post.UpdatedAt = DateTime.UtcNow;
 
-            await _postRepository.UpdatePostAsync(post);
+            var postEdit = _mapper.Map<Post>(post);
+
+            await _postRepository.UpdatePostAsync(postEdit);
         }
     }
 }

@@ -54,6 +54,7 @@ namespace BlogPTC.Infra.IoC
             services.AddTransient<IValidator<PostDTO>, PostValidator>();
             services.AddTransient<IValidator<UserUpdateDTO>, UserUpdateValidator>();
             services.AddTransient<IValidator<NewPostDTO>, NewPostValidator>();
+            services.AddTransient<IValidator<UpdatePostDTO>, UpdatePostValidator>();
 
             services.AddScoped<IPostRepository, PostRepository>();
             services.AddScoped<IUserRepository, UserRepository>();

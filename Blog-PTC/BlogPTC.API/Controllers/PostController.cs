@@ -22,7 +22,7 @@ namespace BlogPTC.API.Controllers
 
         [Authorize(Roles = "Administrador, Usuario")]
         [HttpPost("new")]
-        public async Task<IActionResult> Create([FromBody] NewPostDTO postDto)
+        public async Task<IActionResult> CreatePost([FromBody] NewPostDTO postDto)
         {
             try
             {
@@ -32,6 +32,34 @@ namespace BlogPTC.API.Controllers
                 await _postService.CreatePost(postDto);
 
                 return Ok(new { mensagem = $"post {postDto.Title} criado com sucesso." });
+            }
+            catch (Exception _erro)
+            {
+                _logger.LogError(_erro, _erro.Message, null);
+                return StatusCodeResponse(StatusCodes.Status500InternalServerError, "Erro ao cadastra novo post!");
+            }
+        }
+
+        [Authorize(Roles = "Administrador, Usuario")]
+        [HttpPut("edit/{id}")]
+        public async Task<IActionResult> EditPost([FromBody] UpdatePostDTO postUpdateDto, long id)
+        {
+            try
+            {
+                var userId = HttpContext.User.Claims.FirstOrDefault(u => u.Type == "user_id").Value;
+                postUpdateDto.UserId = userId;
+
+                if (id != postUpdateDto.Id)
+                    return BadRequest("Invalid Data");
+
+                var post = await _postService.GeTPostById(postUpdateDto.Id);
+
+                if (post.UserId != userId)
+                    return BadRequest("Você só pode alterar o seu próprio post!");
+
+                await _postService.UpdatePost(post, postUpdateDto);
+
+                return Ok(new { mensagem = $"post {postUpdateDto.Title} alterado com sucesso." });
             }
             catch (Exception _erro)
             {

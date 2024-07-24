@@ -1,4 +1,5 @@
-﻿using BlogPTC.Application.Dtos;
+﻿using BlogPTC.API.Base;
+using BlogPTC.Application.Dtos;
 using BlogPTC.Application.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -6,20 +7,20 @@ namespace BlogPTC.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UserController : ControllerBase
+    public class UserController : BlogControllerBase
     {
         private readonly IUserService _userService;
         private readonly IRoleService _roleService;
-        private readonly IConfiguration _configuration;
+        private readonly ILogger _logger = null;
 
-        public UserController(IUserService userService, IConfiguration configuration, IRoleService roleService)
+        public UserController(IUserService userService, IRoleService roleService, ILogger logger)
         {
             _userService = userService;
-            _configuration = configuration;
             _roleService = roleService;
+            _logger = logger;
         }
 
-        [HttpPost("registrar")]
+        [HttpPost("register")]
         public async Task<IActionResult> Registrar([FromBody] RegisterDTO registerDTO)
         {
 
@@ -46,9 +47,10 @@ namespace BlogPTC.API.Controllers
 
                 return BadRequest(registerDTO);
             }
-            catch (Exception erro)
+            catch (Exception _erro)
             {
-                throw new Exception(erro.Message);
+                _logger.LogError(_erro, _erro.Message, null);
+                return StatusCodeResponse(StatusCodes.Status500InternalServerError, "Erro ao cadastrar novo usuário!");
             }
         }
     }

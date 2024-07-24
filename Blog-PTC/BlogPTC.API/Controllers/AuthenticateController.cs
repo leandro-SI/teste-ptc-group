@@ -1,4 +1,5 @@
-﻿using BlogPTC.Application.Dtos;
+﻿using BlogPTC.API.Base;
+using BlogPTC.Application.Dtos;
 using BlogPTC.Application.Interfaces;
 using BlogPTC.Domain.Account;
 using Microsoft.AspNetCore.Http;
@@ -9,19 +10,19 @@ namespace BlogPTC.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AuthenticateController : ControllerBase
+    public class AuthenticateController : BlogControllerBase
     {
         private readonly ITokenService _tokenService;
-        private readonly IAuthenticate _authenticateService;
         private readonly IUserService _userService;
         private readonly IRoleService _roleService;
+        private readonly ILogger _logger = null;
 
-        public AuthenticateController(ITokenService tokenService, IAuthenticate authenticateService, IUserService userService, IRoleService roleService)
+        public AuthenticateController(ITokenService tokenService, IUserService userService, IRoleService roleService, ILogger logger)
         {
             _tokenService = tokenService;
-            _authenticateService = authenticateService;
             _userService = userService;
             _roleService = roleService;
+            _logger = logger;
         }
 
         [HttpPost("login")]
@@ -56,9 +57,10 @@ namespace BlogPTC.API.Controllers
 
                 return NotFound("Usuário inválido.");
             }
-            catch (Exception erro)
+            catch (Exception _erro)
             {
-                throw new Exception(erro.Message);
+                _logger.LogError(_erro, _erro.Message, null);
+                return StatusCodeResponse(StatusCodes.Status500InternalServerError, "Erro ao realizar login!");
             }
         }
     }
