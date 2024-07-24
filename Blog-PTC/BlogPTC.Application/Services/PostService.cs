@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using BlogPTC.Application.Dtos;
+using BlogPTC.Application.Dtos.Responses;
 using BlogPTC.Application.Interfaces;
 using BlogPTC.Domain.Entities;
 using BlogPTC.Domain.Interfaces;
@@ -38,11 +39,21 @@ namespace BlogPTC.Application.Services
             return _mapper.Map<PostDTO>(post);
         }
 
-        public async Task<IEnumerable<PostDTO>> GetAllPosts()
+        public async Task<IEnumerable<PostResponseDTO>> GetAllPosts()
         {
             var posts = await _postRepository.GetAllPostsAsync();
 
-            return _mapper.Map<IEnumerable<PostDTO>>(posts);
+            var postsResult = posts.Select(post => new PostResponseDTO
+            {
+                Id = post.Id,
+                Title = post.Title,
+                CreatedAt = post.CreatedAt.ToString("dd-MM-yyyy HH:mm:ss"),
+                UpdatedAt = post.UpdatedAt.ToString("dd-MM-yyyy HH:mm:ss"),
+                Content = post.Content,
+                CreatedBy = post.User.UserName
+            }).ToList();
+
+            return postsResult;
         }
 
         public async Task UpdatePost(PostDTO post, UpdatePostDTO postUpdateDto)

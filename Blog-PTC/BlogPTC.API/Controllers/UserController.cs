@@ -28,7 +28,7 @@ namespace BlogPTC.API.Controllers
         /// <returns>Mensagem de sucesso</returns>
         /// <response code="200">Sucesso</response>
         /// <response code="400">Requisição inválida (por exemplo, dados faltando ou inválidos)</response>
-        /// <response code="500">Erro interno</response>
+        /// <response code="500">Erro interno do servidor</response>
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -38,26 +38,23 @@ namespace BlogPTC.API.Controllers
 
             try
             {
-                string funcao = "Administrador";
-                if (await _userService.GetQuantityUsers() > 0)
-                    funcao = "Usuario";
+                string role = await _userService.GetQuantityUsers() > 0 ? "Usuario" : "Administrador";
 
                 var result = await _userService.RegisterUser(registerDTO, registerDTO.Password);
 
                 if (result)
                 {
-                    var usuario = await _userService.GetUserByEmail(registerDTO.Email);
-
-                    await _roleService.LinkUserRoleAsync(usuario, funcao);
+                    var user = await _userService.GetUserByEmail(registerDTO.Email);
+                    await _roleService.LinkUserRoleAsync(user, role);
 
                     return Ok(new
                     {
-                        email = usuario.Email,
-                        mensagem =  $"Usuário {usuario.UserName} registrado com sucesso. Faça Login!"
+                        email = user.Email,
+                        mensagem =  $"Usuário {user.UserName} registrado com sucesso. Faça Login!"
                     });
                 }
 
-                return BadRequest(registerDTO);
+                return BadRequest("Falha ao registrar usuário. Verifique os dados fornecidos.");
             }
             catch (Exception _erro)
             {

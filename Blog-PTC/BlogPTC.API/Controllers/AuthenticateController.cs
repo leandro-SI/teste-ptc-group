@@ -30,10 +30,10 @@ namespace BlogPTC.API.Controllers
         /// <param name="loginDto">Dados do usuário</param>
         /// <returns>Token</returns>
         /// <response code="200">Sucesso</response>
-        /// <response code="404">Usuário não encotrado</response>
-        /// <response code="500">Erro interno</response>
+        /// <response code="401">Usuário ñão autorizado</response>
+        /// <response code="500">Erro interno do servidor</response>
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpPost("login")]
         public async Task<IActionResult> Logar([FromBody] LoginDTO loginDto)
@@ -46,24 +46,24 @@ namespace BlogPTC.API.Controllers
                 if (user != null)
                 {
                     PasswordHasher<UserDTO> passwordHasher = new PasswordHasher<UserDTO>();
-                    if (passwordHasher.VerifyHashedPassword(user, user.PasswordHash, loginDto.Password) != PasswordVerificationResult.Failed)
+                    var result = passwordHasher.VerifyHashedPassword(user, user.PasswordHash, loginDto.Password);
+
+                    if (result != PasswordVerificationResult.Failed)
                     {
                         var userRoles = await _roleService.GetRolesByUser(user);
-
                         var tokenUser = _tokenService.GenerateToken(user, userRoles.First());
 
                         return Ok(new
                         {
                             username = user.UserName,
-                            mensagem = "Login feito com sucesso.",
+                            mensagem = "Login realizado com sucesso.",
                             token = tokenUser
                         });
                     }
-                    return NotFound("Usuário inválido.");
 
                 }
 
-                return NotFound("Usuário inválido.");
+                return Unauthorized("Usuário ou senha inválidos.");
             }
             catch (Exception _erro)
             {

@@ -28,7 +28,7 @@ namespace BlogPTC.API.Controllers
         /// </summary>
         /// <returns>Lista de posts</returns>
         /// <response code="200">Lista de posts retornada com sucesso</response>
-        /// <response code="500">Erro interno</response>
+        /// <response code="500">Erro interno do servidor</response>
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpGet("get-all")]
@@ -37,7 +37,6 @@ namespace BlogPTC.API.Controllers
             try
             {
                 var posts = await _postService.GetAllPosts();
-
                 return Ok(posts);
             }
             catch (Exception _erro)
@@ -52,10 +51,12 @@ namespace BlogPTC.API.Controllers
         /// Criar novo post
         /// </summary>
         /// <param name="postDto">Dados do post</param>
-        /// <returns>Mensagem de sucesso</returns>
+        /// <returns>Mensagem de sucesso ou erro</returns>
         /// <response code="200">Sucesso</response>
-        /// <response code="500">Erro interno</response>
+        /// <response code="401">Não autorizado</response>
+        /// <response code="500">Erro interno do servidor</response>
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Authorize(Roles = "Administrador, Usuario")]
         [HttpPost("new")]
@@ -63,8 +64,11 @@ namespace BlogPTC.API.Controllers
         {
             try
             {
-                var userId = HttpContext.User.Claims.FirstOrDefault(u => u.Type == "user_id").Value;
-                postDto.UserId = userId;
+                var userIdClaim = HttpContext.User.Claims.FirstOrDefault(u => u.Type == "user_id");
+                if (userIdClaim == null)
+                    return Unauthorized("Usuário não autorizado.");
+
+                postDto.UserId = userIdClaim.Value;
 
                 await _postService.CreatePost(postDto);
 
@@ -85,14 +89,16 @@ namespace BlogPTC.API.Controllers
         /// </summary>
         /// <param name="id">ID do post a ser atualizado</param>
         /// <param name="postUpdateDto">Dados atualizados do post</param>
-        /// <returns>Mensagem de sucesso</returns>
+        /// <returns>Mensagem de sucesso ou erro</returns>
         /// <response code="200">Post atualizado com sucesso</response>
         /// <response code="400">Requisição inválida (por exemplo, dados faltando ou inválidos)</response>
         /// <response code="404">Post não encontrado</response>
-        /// <response code="500">Erro interno</response>
+        /// <response code="401">Não autorizado</response>
+        /// <response code="500">Erro interno do servidor</response>
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Authorize(Roles = "Administrador, Usuario")]
         [HttpPut("edit/{id}")]
@@ -100,11 +106,16 @@ namespace BlogPTC.API.Controllers
         {
             try
             {
-                var userId = HttpContext.User.Claims.FirstOrDefault(u => u.Type == "user_id").Value;
+                var userIdClaim = HttpContext.User.Claims.FirstOrDefault(u => u.Type == "user_id");
+                if (userIdClaim == null)
+                    return Unauthorized("Usuário não autorizado.");
+
+                var userId = userIdClaim.Value;
+
                 postUpdateDto.UserId = userId;
 
                 if (id != postUpdateDto.Id)
-                    return BadRequest("Invalid Data");
+                    return BadRequest("ID do post não corresponde ao ID fornecido.");
 
                 var post = await _postService.GeTPostById(postUpdateDto.Id);
 
@@ -112,7 +123,7 @@ namespace BlogPTC.API.Controllers
                     return NotFound("Post não encontrado.");
 
                 if (post.UserId != userId)
-                    return BadRequest("Você só pode alterar o seu próprio post!");
+                    return Unauthorized("Você só pode alterar o seu próprio post!");
 
                 await _postService.UpdatePost(post, postUpdateDto);
 
@@ -133,9 +144,12 @@ namespace BlogPTC.API.Controllers
         /// <returns>Mensagem de sucesso</returns>
         /// <response code="200">Post excluído com sucesso</response>
         /// <response code="404">Post não encontrado</response>
-        /// <response code="500">Erro interno</response>
+        /// <response code="400">Tentativa de excluir post de outro usuário</response>
+        /// <response code="401">Não autorizado</response>
+        /// <response code="500">Erro interno do servidor</response>
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Authorize(Roles = "Administrador, Usuario")]
         [HttpDelete("delete/{id}")]
@@ -143,7 +157,11 @@ namespace BlogPTC.API.Controllers
         {
             try
             {
-                var userId = HttpContext.User.Claims.FirstOrDefault(u => u.Type == "user_id").Value;
+                var userIdClaim = HttpContext.User.Claims.FirstOrDefault(u => u.Type == "user_id");
+                if (userIdClaim == null)
+                    return Unauthorized("Usuário não autorizado.");
+
+                var userId = userIdClaim.Value;
 
                 var post = await _postService.GeTPostById(id);
 
@@ -151,7 +169,7 @@ namespace BlogPTC.API.Controllers
                     return NotFound("Post não encontrado.");
 
                 if (post.UserId != userId)
-                    return BadRequest("Você só pode excluir o seu próprio post!");
+                    return Unauthorized("Você só pode excluir o seu próprio post.");
 
                 await _postService.DeletePost(id);
 
