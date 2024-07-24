@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="./wwwroot/lib/signalr.js"></script>
+    <title>Notificações em Tempo Real</title>
+</head>
+<body>
+    <h1>Notificações em Tempo Real</h1>
+
+
+</body>
+<script>
+    const connection = new signalR.HubConnectionBuilder()
+    .withUrl("http://localhost:5184/ws")
+    .build();
+
+    connection.on("PostNotification", (message) => {
+        console.log("Nova notificação recebida:", message);
+        alert(`Nova notificação: ${message}`);
+    });
+
+    connection.start()
+        .then(() => {
+            console.log("Conectado ao WebSocket");
+        })
+        .catch(err => {
+            console.error("Erro ao conectar ao WebSocket:", err);
+        });
+</script>
+</html>

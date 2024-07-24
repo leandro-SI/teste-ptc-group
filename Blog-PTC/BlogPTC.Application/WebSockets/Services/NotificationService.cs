@@ -13,7 +13,7 @@ namespace BlogPTC.Application.WebSockets.Services
 
         public async Task SendNotificationAsync(string message)
         {
-            await _hubContext.Clients.All.SendAsync("ReceiveNotification", message);
+            await _hubContext.Clients.All.SendAsync("PostNotification", message);
         }
     }
 }
