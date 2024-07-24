@@ -25,11 +25,11 @@ builder.Services.AddCors(options =>
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+//builder.Services.AddSwaggerGen();
 
 builder.Services.AddIdentity<User, Role>().AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
 
-
+builder.Services.AddInfraEstructureSwagger();
 builder.Services.AddInfraEstructureJWT(builder.Configuration);
 builder.Services.AddInfraEstructureAPI(builder.Configuration);
 
